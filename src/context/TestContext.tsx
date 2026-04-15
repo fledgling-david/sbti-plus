@@ -57,7 +57,7 @@ interface TestContextType {
 const TestContext = createContext<TestContextType | undefined>(undefined);
 
 // API基础URL
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://sbti-plus-ab76.vercel.app/api';
 
 // 模拟题库数据（作为 fallback）
 const mockQuestions: Question[] = [

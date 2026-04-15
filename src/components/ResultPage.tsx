@@ -53,7 +53,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ onRestart }) => {
   useEffect(() => {
     const fetchStatistics = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/stats');
+        const response = await fetch('https://sbti-plus-ab76.vercel.app/api/stats');
         const data = await response.json();
         setStatistics(data);
       } catch (error) {

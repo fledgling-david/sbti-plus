@@ -37,7 +37,7 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onBack }) => {
 
   const fetchStatistics = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/stats');
+      const response = await fetch('https://sbti-plus-ab76.vercel.app/api/stats');
       const data = await response.json();
       setStats(data);
     } catch (error) {
