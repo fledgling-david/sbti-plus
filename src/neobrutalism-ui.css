@@ -1,0 +1,982 @@
+/* 新拟态粗野主义(Neobrutalism)设计规范 */
+
+:root {
+  /* 色彩系统 */
+  --bg-color: #E8F0FE;
+  --primary-color: #FF6B6B;
+  --secondary-color: #4ECDC4;
+  --accent-color: #FFD166;
+  --text-color: #000000;
+  --white: #FFFFFF;
+  
+  /* 边框和阴影 */
+  --border-width: 3px;
+  --border-color: #000000;
+  --shadow: 4px 4px 0px #000000;
+  --shadow-hover: 6px 6px 0px #000000;
+  
+  /* 圆角 */
+  --border-radius: 12px;
+  
+  /* 间距 */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  
+  /* 修复：使用Fredoka One字体 */
+  --font-family: 'Fredoka One', 'Arial', 'Helvetica', sans-serif;
+  --font-bold: 400;
+  --font-black: 400;
+  
+  /* 动画 */
+  --transition-speed: 0.25s; /* 优化：从0.2s调整为0.25s，增加过渡时间 */
+}
+
+/* 全局样式 */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;  /* 禁止页面滚动 */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  line-height: 1.6;
+  /* 背景网格 */
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.1) 0.8px, transparent 0.8px), /* 优化：线宽从1px调整为0.8px */
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0.8px, transparent 0.8px); /* 优化：线宽从1px调整为0.8px */
+  background-size: 20px 20px;
+}
+
+/* 主容器 */
+.neobrutal-container {
+  min-height: 100vh;
+  padding: 2.75rem 2.25rem; /* 优化：从var(--spacing-md)调整为2.75rem 2.25rem，增加内边距 */
+  padding-bottom: 3rem; /* 优化：新增下内边距3rem，调整视觉重心 */
+  overflow-y: auto;  /* 允许内容垂直滚动 */
+  overflow-x: hidden;  /* 禁止水平滚动 */
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* 卡片组件 */
+.neobrutal-card {
+  background-color: var(--white);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 2.25rem 1.75rem; /* 优化：从var(--spacing-lg)调整为2.25rem 1.75rem，增加内边距 */
+  transition: all var(--transition-speed) ease;
+  margin-bottom: 1.25rem; /* 优化：新增margin-bottom，从1rem调整为1.25rem */
+}
+
+.neobrutal-card:hover {
+  box-shadow: 0 10px 0 #000; /* 优化：从var(--shadow-hover)调整为0 10px 0 #000，增加阴影效果 */
+  transform: translateY(-5px); /* 优化：从translate(-2px, -2px)调整为translateY(-5px)，增加悬浮效果 */
+}
+
+/* 按钮样式 */
+.neobrutal-button {
+  background-color: var(--white);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-family);
+  font-weight: var(--font-bold);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.22s ease; /* 优化：从var(--transition-speed)调整为0.22s，增加过渡时间 */
+  min-width: 120px;
+  min-height: 60px; /* 优化：从44px调整为60px，增加按钮高度 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em; /* 优化：新增letter-spacing属性 */
+  margin-top: 1.75rem; /* 优化：与卡片间距从1.5rem调整为1.75rem */
+}
+
+.neobrutal-button:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+  box-shadow: 0 10px 0 #000; /* 优化：从var(--shadow-hover)调整为0 10px 0 #000，增加阴影效果 */
+  transform: scale(1.03); /* 优化：从translate(-2px, -2px)调整为scale(1.03)，增加缩放效果 */
+}
+
+.neobrutal-button:active {
+  box-shadow: none;
+  transform: translate(4px, 4px);
+}
+
+.neobrutal-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow);
+}
+
+/* 进度条容器 - 给狗头留出空间 */
+.neobrutal-progress-container {
+  position: relative;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 8px;
+}
+
+/* 进度条 */
+.neobrutal-progress {
+  width: 100%;
+  height: 48px;
+  background-color: var(--white);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.neobrutal-progress-bar {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: 20px;
+  transition: width 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 0 10px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* 进度条接近100%时的特殊处理 */
+.neobrutal-progress-bar.progress-bar-complete,
+.neobrutal-progress-bar[style*="width: 100"],
+.neobrutal-progress-bar[style*="width:100"] {
+  border-radius: 20px;
+  border-right: none;
+  padding: 0 12px;
+  width: 100% !important;
+}
+
+/* 进度条文字 - 清晰易读 */
+.progress-text {
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  color: #000000;
+  text-shadow: none;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@keyframes wangcaiBounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+/* SVG狗头 - 耳朵晃动动画 */
+@keyframes earWiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
+/* SVG狗头 - 眨眼动画 */
+@keyframes blink {
+  0%, 45%, 55%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* SVG狗头 - 嘴巴微动动画 */
+@keyframes mouthMove {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+
+/* SVG狗头 - 舌头微动动画 */
+@keyframes tongueMove {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(3px) scaleY(1.2);
+  }
+}
+
+/* 发疯文学文本过渡效果 */
+.crazy-text-transition {
+  animation: textFadeIn 0.2s ease-out;
+}
+
+@keyframes textFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 狗头图标强制居中 */
+.dog-icon-container {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.dog-icon-container img {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  float: none !important;
+}
+
+/* 选项按钮 */
+.neobrutal-option {
+  background-color: var(--white);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+}
+
+.neobrutal-option:hover {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  box-shadow: var(--shadow-hover);
+  transform: translate(-2px, -2px);
+}
+
+.neobrutal-option.selected {
+  background-color: var(--primary-color);
+  color: var(--white);
+  box-shadow: none;
+  transform: translate(4px, 4px);
+}
+
+/* 选项字母 */
+.option-letter {
+  width: 32px;
+  height: 32px;
+  background-color: var(--accent-color);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-black);
+  margin-right: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+/* 标题样式 */
+.neobrutal-title {
+  font-weight: var(--font-black);
+  font-size: 28px;
+  margin-bottom: 0.875rem; /* 优化：与副标题间距从1rem调整为0.875rem */
+  line-height: 1.15; /* 优化：从1.2调整为1.15，降低行高 */
+  letter-spacing: -0.02em; /* 优化：新增letter-spacing属性 */
+}
+
+.neobrutal-subtitle {
+  font-weight: var(--font-bold);
+  font-size: 20px;
+  margin-bottom: 0.625rem; /* 优化：新增margin-bottom:0.625rem属性 */
+  line-height: 1.5; /* 优化：从1.6调整为1.5，降低行高 */
+}
+
+/* 文本样式 */
+.neobrutal-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}
+
+/* 版权区域 */
+.copyright {
+  margin-top: 1.25rem; /* 优化：与按钮间距从1rem调整为1.25rem */
+  padding-bottom: 1.5rem; /* 优化：新增padding-bottom:1.5rem样式 */
+  text-align: center;
+  font-size: 12px;
+}
+
+/* 按钮悬停颜色 */
+.button-copy:hover {
+  background-color: #E8F0FE !important;
+  color: #1E40AF !important;
+}
+
+.button-poster:hover {
+  background-color: #FEF3C7 !important;
+  color: #92400E !important;
+}
+
+.button-restart:hover {
+  background-color: #DCFCE7 !important;
+  color: #15803D !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .neobrutal-container {
+    padding: var(--spacing-sm);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .neobrutal-card {
+    padding: var(--spacing-md);
+  }
+  
+  .neobrutal-title {
+    font-size: 24px;
+  }
+  
+  .neobrutal-subtitle {
+    font-size: 18px;
+  }
+  
+  .neobrutal-text {
+    font-size: 16px;
+  }
+  
+  /* 移动端进度条组件优化 */
+  .progress-section .neobrutal-card {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .progress-section .neobrutal-subtitle {
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .neobrutal-progress {
+    height: 36px;
+    border-radius: 18px;
+  }
+  
+  .neobrutal-progress-bar {
+    min-width: 50px;
+    padding: 0 8px;
+    font-size: 14px;
+  }
+  
+  .neobrutal-progress-bar.progress-bar-complete,
+  .neobrutal-progress-bar[style*="width: 100"],
+  .neobrutal-progress-bar[style*="width:100"] {
+    padding: 0 10px;
+  }
+  
+  .progress-text {
+    font-size: 14px;
+    margin-top: 0.5rem;
+  }
+  
+  /* 移动端装饰元素隐藏 */
+  .decoration-element {
+    display: none;
+  }
+  
+  /* 移动端进度条行 */
+  .mobile-progress-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-progress-row {
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .mobile-progress-row .emoji-3d {
+      font-size: 32px !important;
+    }
+    
+    .mobile-progress-row .neobrutal-progress {
+      height: 20px !important;
+    }
+    
+    .mobile-progress-row .neobrutal-subtitle {
+      font-size: 12px !important;
+    }
+    
+    .mobile-progress-row .progress-text {
+      font-size: 10px !important;
+    }
+  }
+  
+  /* 移动端底部固定按钮 */
+  .mobile-bottom-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color);
+    border-top: var(--border-width) solid var(--border-color);
+    padding: var(--spacing-sm);
+    display: flex;
+    justify-content: space-between;
+    z-index: 100;
+  }
+  
+  .mobile-bottom-buttons .neobrutal-button {
+    flex: 1;
+    margin: 0 var(--spacing-xs);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .neobrutal-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  .options-grid .neobrutal-option {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .neobrutal-container {
+    max-width: 820px; /* 优化：从800px调整为820px，增加宽度 */
+    margin: 0 auto;
+  }
+  
+  /* 仅在答题页面使用分栏布局 */
+  .neobrutal-container.has-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-lg);
+    align-items: start;
+  }
+  
+  .progress-section {
+    position: sticky;
+    top: var(--spacing-lg);
+  }
+  
+  .question-section {
+    grid-column: 2;
+  }
+  
+  .neobrutal-title {
+    font-size: 32px;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.neobrutal-animate-slide {
+  animation: slideIn 0.3s ease forwards;
+}
+
+.neobrutal-animate-bounce {
+  animation: bounceIn 0.3s ease forwards;
+}
+
+/* 加载动画 */
+.neobrutal-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.neobrutal-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: var(--border-width) solid var(--border-color);
+  border-top: var(--border-width) solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 错误提示 */
+.neobrutal-error {
+  background-color: #FFE0E0;
+  border: var(--border-width) solid #FF0000;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  color: #FF0000;
+  font-weight: var(--font-bold);
+}
+
+/* 辅助文本 */
+.neobrutal-help-text {
+  font-size: 14px;
+  color: #666666;
+  margin-top: var(--spacing-xs);
+}
+
+/* 文本颜色类 */
+.text-primary-color {
+  color: var(--primary-color);
+}
+
+/* 加载页面容器 - 双重居中 */
+.loading-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  padding: var(--spacing-md);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 加载卡片 - 响应式大小 */
+.loading-card {
+  width: 90%;
+  max-width: 480px;
+  padding: 3rem 2.5rem;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .loading-card {
+    padding: 3.5rem 3rem;
+  }
+}
+
+/* 微信旺柴表情包容器 */
+.emoji-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+/* 表情包图片 - 统一尺寸 */
+.emoji-image {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.emoji-image:hover {
+  transform: scale(1.1);
+}
+
+@media (min-width: 768px) {
+  .emoji-image {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .emoji-container {
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================
+   创意字体方案 - 3种独特风格
+   ============================================ */
+
+/* 方案1: 漫画/复古游戏风格 (Comic/Retro Game)
+   特点：Bangers字体 + 大号字间距 + 粗黑效果
+   适合：年轻、活力、有趣的氛围 */
+.font-scheme-comic {
+  font-family: 'Bangers', 'Press Start 2P', cursive;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.font-scheme-comic .creative-title {
+  font-size: 2.5rem !important;
+  letter-spacing: 0.15em !important;
+  text-shadow: 3px 3px 0px #000;
+}
+
+.font-scheme-comic .creative-text {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.25rem !important;
+  letter-spacing: 0.05em;
+  transform: rotate(-1deg);
+}
+
+.font-scheme-comic .creative-accent {
+  font-family: 'Creepster', cursive;
+  font-size: 1.5rem !important;
+  letter-spacing: 0.1em;
+}
+
+/* 方案2: 故障艺术/赛博朋克风格 (Glitch/Cyberpunk)
+   特点：Rubik Glitch字体 + 错位效果 + 霓虹色
+   适合：科技感、未来感、抽象感 */
+.font-scheme-glitch {
+  font-family: 'Rubik Glitch', 'Space Grotesk', sans-serif;
+}
+
+.font-scheme-glitch .creative-title {
+  font-size: 2.25rem !important;
+  position: relative;
+  animation: glitchText 3s infinite;
+}
+
+.font-scheme-glitch .creative-title::before,
+.font-scheme-glitch .creative-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.font-scheme-glitch .creative-title::before {
+  left: 2px;
+  text-shadow: -2px 0 #FF6B6B;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitchAnim 3s infinite linear alternate-reverse;
+}
+
+.font-scheme-glitch .creative-title::after {
+  left: -2px;
+  text-shadow: -2px 0 #4ECDC4;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitchAnim 2s infinite linear alternate-reverse;
+}
+
+.font-scheme-glitch .creative-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem !important;
+  letter-spacing: 0.08em;
+}
+
+.font-scheme-glitch .creative-accent {
+  font-family: 'Rubik Glitch', sans-serif;
+  font-size: 1.25rem !important;
+}
+
+@keyframes glitchAnim {
+  0% { clip: rect(31px, 9999px, 94px, 0); }
+  20% { clip: rect(62px, 9999px, 42px, 0); }
+  40% { clip: rect(16px, 9999px, 78px, 0); }
+  60% { clip: rect(79px, 9999px, 8px, 0); }
+  80% { clip: rect(27px, 9999px, 65px, 0); }
+  100% { clip: rect(52px, 9999px, 23px, 0); }
+}
+
+@keyframes glitchText {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+/* 方案3: 手写/艺术风格 (Handwritten/Artistic)
+   特点：Permanent Marker + 不规则排版 + 涂鸦感
+   适合：个性化、艺术感、自由表达 */
+.font-scheme-handwritten {
+  font-family: 'Permanent Marker', 'Space Grotesk', cursive;
+}
+
+.font-scheme-handwritten .creative-title {
+  font-size: 2.25rem !important;
+  letter-spacing: 0.08em;
+  transform: rotate(-2deg);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #FF6B6B;
+  text-underline-offset: 8px;
+}
+
+.font-scheme-handwritten .creative-text {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.2rem !important;
+  letter-spacing: 0.03em;
+  transform: rotate(1deg);
+}
+
+.font-scheme-handwritten .creative-accent {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.35rem !important;
+  letter-spacing: 0.05em;
+  transform: rotate(-1deg);
+  position: relative;
+}
+
+.font-scheme-handwritten .creative-accent::after {
+  content: '✨';
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  font-size: 1.5rem;
+}
+
+/* 响应式调整 - 创意字体 */
+@media (max-width: 640px) {
+  .font-scheme-comic .creative-title,
+  .font-scheme-glitch .creative-title,
+  .font-scheme-handwritten .creative-title {
+    font-size: 1.75rem !important;
+  }
+  
+  .font-scheme-comic .creative-text,
+  .font-scheme-glitch .creative-text,
+  .font-scheme-handwritten .creative-text {
+    font-size: 1rem !important;
+  }
+  
+  .font-scheme-comic .creative-accent,
+  .font-scheme-glitch .creative-accent,
+  .font-scheme-handwritten .creative-accent {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* ============================================
+   GIF图片优化样式
+   ============================================ */
+
+.gif-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.gif-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .gif-image {
+    max-height: 350px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .gif-image {
+    max-height: 450px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gif-image {
+    max-height: 550px;
+  }
+}
+
+/* ============================================
+   加载页面优化样式
+   ============================================ */
+
+/* 加载卡片优化 */
+.loading-card {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .loading-card {
+    max-width: 700px;
+  }
+}
+
+/* 脉冲动画 - 更柔和的版本 */
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* 淡入动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* 旋转图标动画 */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* 加载阶段文本过渡 */
+.loading-stage-text {
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* 底部导航 */
+.neobrutal-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: var(--border-width) solid var(--border-color);
+}
+
+/* 进度文本 */
+.progress-text {
+  font-weight: var(--font-bold);
+  margin-bottom: var(--spacing-xs);
+  text-align: right;
+}
+
+/* 3D Emoji */
+.emoji-3d {
+  font-size: 80px;
+  margin-bottom: var(--spacing-md);
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.emoji-3d:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* 装饰元素 */
+.decoration-element {
+  position: absolute;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.decoration-circle {
+  width: 100px;
+  height: 100px;
+  border: var(--border-width) solid var(--border-color);
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  top: 10%;
+  right: 10%;
+}
+
+.decoration-square {
+  width: 80px;
+  height: 80px;
+  border: var(--border-width) solid var(--border-color);
+  background-color: var(--secondary-color);
+  bottom: 10%;
+  left: 10%;
+  transform: rotate(15deg);
+}

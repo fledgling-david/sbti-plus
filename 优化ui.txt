@@ -1,0 +1,194 @@
+
+---
+
+### ✨ 优化后完整代码示例（直接复制运行，已满足所有需求）
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBTI测试加载页</title>
+    <!-- 引入可爱卡通字体：Fredoka One（Google Fonts，可商用） -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 淡网格背景，优化透明度 */
+            background-color: #f0f4f8;
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px),
+                            linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+            min-height: 100vh;
+            /* 页面整体居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Fredoka One', 'Comic Neue', cursive;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 48px 64px;
+            max-width: 800px;
+            width: 90%;
+            /* 内容垂直居中 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            border: 3px solid #1a1a1a;
+        }
+
+        .title {
+            font-size: 32px;
+            color: #1a1a1a;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* 进度条容器 */
+        .progress-bar-container {
+            width: 100%;
+            height: 32px;
+            background-color: #f3f4f6;
+            border-radius: 16px;
+            position: relative;
+            overflow: visible;
+            border: 2px solid #1a1a1a;
+        }
+
+        /* 进度条填充部分 */
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fcd34d, #fbbf24);
+            border-radius: 14px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        /* 进度百分比文字 */
+        .progress-percent {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            z-index: 2;
+        }
+
+        /* 狗头图标 */
+        .dog-head {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            z-index: 3;
+            transition: left 0.3s ease;
+            /* 轻微悬浮效果 */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .loading-text {
+            font-size: 20px;
+            color: #1a1a1a;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .highlight-text {
+            font-size: 20px;
+            color: #f43f5e;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .copyright {
+            font-size: 16px;
+            color: #6b7280;
+            text-align: center;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">准备开始…</h1>
+
+        <!-- 进度条 -->
+        <div class="progress-bar-container">
+            <div class="progress-percent" id="percentText">0%</div>
+            <div class="progress-bar-fill" id="progressFill"></div>
+            <!-- 卡通狗头SVG（内联，无外部依赖） -->
+            <svg class="dog-head" id="dogHead" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- 可爱柴犬狗头 -->
+                <circle cx="50" cy="50" r="40" fill="#f8b195"/>
+                <circle cx="35" cy="40" r="5" fill="#1a1a1a"/>
+                <circle cx="65" cy="40" r="5" fill="#1a1a1a"/>
+                <path d="M 50 55 Q 40 65 30 60" stroke="#1a1a1a" stroke-width="3" fill="none"/>
+                <path d="M 50 55 Q 60 65 70 60" stroke="#1a1a1a" stroke-width="3" fill="none"/>
+                <circle cx="50" cy="50" r="3" fill="#f43f5e"/>
+                <path d="M 20 30 Q 10 10 30 20" fill="#f8b195"/>
+                <path d="M 80 30 Q 90 10 70 20" fill="#f8b195"/>
+            </svg>
+        </div>
+
+        <div class="loading-text">
+            正在准备测试…<br>
+            人类哪有不发疯的？硬撑罢了…
+        </div>
+
+        <div class="highlight-text">
+            SBTI 1.0.0 扒光你所有伪装🎈
+        </div>
+
+        <div class="copyright">
+            ©2026 别装了 你根本藏不住
+        </div>
+    </div>
+
+    <script>
+        const progressFill = document.getElementById('progressFill');
+        const percentText = document.getElementById('percentText');
+        const dogHead = document.getElementById('dogHead');
+        const progressContainer = document.querySelector('.progress-bar-container');
+
+        // 模拟进度加载（可替换为真实业务逻辑）
+        let progress = 0;
+        const interval = setInterval(() => {
+            if (progress >= 100) {
+                clearInterval(interval);
+                return;
+            }
+            // 模拟随机加载，可调整速度（修改数值即可）
+            progress += Math.random() * 2;
+            progress = Math.min(progress, 100);
+            
+            // 更新进度条宽度
+            progressFill.style.width = `${progress}%`;
+            // 更新百分比文字
+            percentText.textContent = `${Math.round(progress)}%`;
+            
+            // 核心：计算狗头位置，严格跟随进度百分比
+            const containerWidth = progressContainer.offsetWidth;
+            const dogWidth = dogHead.offsetWidth;
+            // 公式：进度比例 * (容器宽度 - 狗头宽度) + 狗头宽度/2，确保0%在最左，100%在最右
+            const dogLeft = (progress / 100) * (containerWidth - dogWidth) + (dogWidth / 2);
+            dogHead.style.left = `${dogLeft}px`;
+        }, 100);
+    </script>
+</body>
+</html>

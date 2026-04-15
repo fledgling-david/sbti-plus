@@ -1,0 +1,369 @@
+/* 治愈系UI设计规范 */
+
+/* 色彩系统 */
+:root {
+  /* 主色调 */
+  --primary-blue: #85A5CC;
+  --primary-green: #A3D9B1;
+  
+  /* 背景色 */
+  --bg-cream: #FFFDF5;
+  
+  /* 辅助色 */
+  --accent-light: #E8F4F8;
+  --accent-dark: #6B8AA8;
+  
+  /* 文本色 */
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #999999;
+  
+  /* 边框色 */
+  --border-color: rgba(133, 165, 204, 0.2);
+}
+
+/* 全局样式 */
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-primary);
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* 背景装饰 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(to right, var(--border-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 标题渐变效果 */
+.gradient-text {
+  background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* 卡片组件 */
+.healing-card {
+  background: rgba(255, 253, 245, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.healing-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* 按钮样式 */
+.healing-button {
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(133, 165, 204, 0.3);
+}
+
+.healing-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(133, 165, 204, 0.4);
+}
+
+.healing-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(133, 165, 204, 0.3);
+}
+
+/* 次级按钮 */
+.healing-button-secondary {
+  background: transparent;
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.healing-button-secondary:hover {
+  background: var(--primary-blue);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* 输入框样式 */
+.healing-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.healing-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(133, 165, 204, 0.1);
+}
+
+/* 进度条样式 */
+.healing-progress {
+  width: 100%;
+  height: 8px;
+  background: var(--accent-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.healing-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* 字体系统 */
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* 图标样式 */
+.healing-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-blue);
+  transition: all 0.3s ease;
+}
+
+.healing-icon:hover {
+  color: var(--primary-green);
+  transform: scale(1.1);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .healing-card {
+    padding: 16px;
+  }
+  
+  h1 {
+    font-size: 28px;
+  }
+  
+  h2 {
+    font-size: 24px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
+  
+  .healing-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* 心理测试专用样式 */
+.test-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.question-card {
+  margin-bottom: 32px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-item:hover {
+  background: rgba(133, 165, 204, 0.1);
+  transform: translateX(8px);
+}
+
+.option-item.selected {
+  background: linear-gradient(135deg, rgba(133, 165, 204, 0.1), rgba(163, 217, 177, 0.1));
+  border-color: var(--primary-blue);
+  box-shadow: 0 2px 8px rgba(133, 165, 204, 0.2);
+}
+
+.result-card {
+  text-align: center;
+  padding: 40px;
+}
+
+.result-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+  border-radius: 50%;
+  color: white;
+  font-size: 32px;
+}
+
+/* 加载动画 */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--accent-light);
+  border-top: 3px solid var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 温馨提示样式 */
+.tip-box {
+  background: linear-gradient(135deg, rgba(163, 217, 177, 0.1), rgba(133, 165, 204, 0.1));
+  border-left: 4px solid var(--primary-green);
+  padding: 16px;
+  border-radius: 0 12px 12px 0;
+  margin: 24px 0;
+}
+
+.tip-box p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* 导航样式 */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* 分享按钮样式 */
+.share-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.share-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.share-button:hover {
+  background: var(--primary-blue);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* 页脚样式 */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+.footer p {
+  margin: 0;
+}
