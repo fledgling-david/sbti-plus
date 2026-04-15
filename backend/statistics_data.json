@@ -1,6 +1,6 @@
 {
-  "page_views": 3,
-  "unique_visitors": 7,
+  "page_views": 4,
+  "unique_visitors": 8,
   "visitor_sessions": [
     "f31d95a1-ec2d-4979-b717-f487de77bcd8",
     "b06e4e4f-eaab-4e5e-b1a9-009b6ab54cd1",
@@ -8,10 +8,13 @@
     "03d75da0-7342-4882-a9bb-085e0337b989",
     "06a6c378-9eda-4576-bb84-5b129ec696c0",
     "20963abf-6ea1-4068-99e4-300750b031c2",
-    "9f57ed48-6f7f-4e81-950e-af5ec87b4a7a"
+    "9f57ed48-6f7f-4e81-950e-af5ec87b4a7a",
+    "7347de49-99ea-4535-99ba-244435c092b7"
   ],
   "test_results": {
-    "乐子人": 1
+    "乐子人": 1,
+    "社交牛杂症": 1,
+    "脆皮": 1
   },
-  "total_tests": 1
+  "total_tests": 3
 }
