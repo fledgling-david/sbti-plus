@@ -63,7 +63,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onStartTest }) => {
     // 记录页面访问
     const recordPageView = async () => {
       try {
-        const response = await fetch('https://sbti-plus-ab76.vercel.app/api/stats/page-view', {
+        const response = await fetch('/api/stats/page-view', {
           method: 'POST',
         });
         const data = await response.json();
