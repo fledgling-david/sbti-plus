@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Cookie
 from typing import List
 from models import Question, TestRequest, TestResponse
 from personality_calculator import questions, calculate_result
@@ -7,31 +7,23 @@ import uuid
 
 router = APIRouter()
 
-
 @router.get("/questions", response_model=List[Question])
 def get_questions():
-    """
-    获取测试题库
-    """
+    """获取测试题库"""
     return questions
-
 
 @router.post("/test", response_model=TestResponse)
 def submit_test(request: TestRequest):
-    """
-    提交测试答案，返回测试结果
-    """
+    """提交测试答案，返回测试结果"""
     result = calculate_result(request.selected_options)
     # 记录测试结果
     statistics.record_test_result(result.personality.name)
     return result
 
-
+# 关键修复：改成用Cookie获取session_id，不用Request解析请求体
 @router.post("/stats/page-view")
 def record_page_view(request: Request):
-    """
-    记录页面访问
-    """
+    """记录页面访问"""
     # 从cookie中获取session_id，如果没有则生成新的
     session_id = request.cookies.get("sbti_session_id")
     if not session_id:
@@ -45,12 +37,9 @@ def record_page_view(request: Request):
         "session_id": session_id
     }
 
-
 @router.get("/stats")
 def get_statistics():
-    """
-    获取完整统计数据
-    """
+    """获取完整统计数据"""
     stats = statistics.get_statistics()
     
     # 计算百分比
@@ -59,10 +48,9 @@ def get_statistics():
     
     if total_tests > 0:
         for personality, count in stats["test_results"].items():
-            percentage = round((count / total_tests) * 100, 2)
             personality_percentages[personality] = {
                 "count": count,
-                "percentage": percentage
+                "percentage": round((count / total_tests) * 100, 2)
             }
     
     return {
