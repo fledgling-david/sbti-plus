@@ -23,14 +23,12 @@ def submit_test(request: TestRequest):
 # 关键修复：改成用Cookie获取session_id，不用Request解析请求体
 @router.post("/stats/page-view")
 def record_page_view(request: Request):
-    """记录页面访问"""
-    # 从cookie中获取session_id，如果没有则生成新的
     session_id = request.cookies.get("sbti_session_id")
     if not session_id:
         session_id = str(uuid.uuid4())
-    
+
     stats = statistics.record_page_view(session_id)
-    
+
     return {
         "page_views": stats["page_views"],
         "unique_visitors": stats["unique_visitors"],
@@ -39,20 +37,17 @@ def record_page_view(request: Request):
 
 @router.get("/stats")
 def get_statistics():
-    """获取完整统计数据"""
     stats = statistics.get_statistics()
-    
-    # 计算百分比
+
     total_tests = stats["total_tests"]
     personality_percentages = {}
-    
-    if total_tests > 0:
-        for personality, count in stats["test_results"].items():
-            personality_percentages[personality] = {
-                "count": count,
-                "percentage": round((count / total_tests) * 100, 2)
-            }
-    
+
+    for p, count in stats["test_results"].items():
+        personality_percentages[p] = {
+            "count": count,
+            "percentage": round((count / total_tests) * 100, 2) if total_tests > 0 else 0
+        }
+
     return {
         "page_views": stats["page_views"],
         "unique_visitors": stats["unique_visitors"],
