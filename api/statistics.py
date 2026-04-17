@@ -3,7 +3,7 @@ import os
 from typing import Dict, List, Optional
 from pathlib import Path
 
-# 统计数据文件路径
+# 统计数据文件路径（只读，不写入）
 DATA_FILE = Path(__file__).parent / "statistics_data.json"
 
 # 默认统计数据结构
@@ -15,30 +15,30 @@ DEFAULT_STATS = {
     "total_tests": 0
 }
 
+# 内存里的统计数据（只在当前函数实例中有效，重启后重置）
+IN_MEMORY_STATS = None
 
 def load_stats() -> Dict:
-    """加载统计数据"""
-    if not DATA_FILE.exists():
-        return DEFAULT_STATS.copy()
+    """加载统计数据（只读，不写入）"""
+    global IN_MEMORY_STATS
+    if IN_MEMORY_STATS is not None:
+        return IN_MEMORY_STATS
     
-    try:
-        with open(DATA_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except Exception:
-        return DEFAULT_STATS.copy()
-
-
-def save_stats(stats: Dict):
-    """保存统计数据"""
-    try:
-        with open(DATA_FILE, 'w', encoding='utf-8') as f:
-            json.dump(stats, f, ensure_ascii=False, indent=2)
-    except Exception as e:
-        print(f"保存统计数据失败: {e}")
-
+    # 优先读取文件中的数据（只读）
+    if DATA_FILE.exists():
+        try:
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                IN_MEMORY_STATS = json.load(f)
+                return IN_MEMORY_STATS
+        except Exception:
+            pass
+    
+    # 文件不存在或读取失败，使用默认数据
+    IN_MEMORY_STATS = DEFAULT_STATS.copy()
+    return IN_MEMORY_STATS
 
 def record_page_view(session_id: Optional[str] = None) -> Dict:
-    """记录页面访问"""
+    """记录页面访问（只更新内存数据，不写入文件）"""
     stats = load_stats()
     
     # 增加页面访问量
@@ -50,26 +50,4 @@ def record_page_view(session_id: Optional[str] = None) -> Dict:
             stats["visitor_sessions"].append(session_id)
             stats["unique_visitors"] = len(stats["visitor_sessions"])
     
-    save_stats(stats)
     return stats
-
-
-def record_test_result(personality_name: str) -> Dict:
-    """记录测试结果"""
-    stats = load_stats()
-    
-    # 增加总测试数
-    stats["total_tests"] += 1
-    
-    # 记录人格类型
-    if personality_name not in stats["test_results"]:
-        stats["test_results"][personality_name] = 0
-    stats["test_results"][personality_name] += 1
-    
-    save_stats(stats)
-    return stats
-
-
-def get_statistics() -> Dict:
-    """获取完整统计数据"""
-    return load_stats()
