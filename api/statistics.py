@@ -1,6 +1,5 @@
 import json
-import os
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from pathlib import Path
 
 # 统计数据文件路径（只读，不写入）
@@ -15,27 +14,27 @@ DEFAULT_STATS = {
     "total_tests": 0
 }
 
-# 内存里的统计数据（只在当前函数实例中有效，重启后重置）
-IN_MEMORY_STATS = None
+# 全局内存变量（只在当前函数实例中有效，重启后重置）
+_stats_cache: Dict = None
 
 def load_stats() -> Dict:
-    """加载统计数据（只读，不写入）"""
-    global IN_MEMORY_STATS
-    if IN_MEMORY_STATS is not None:
-        return IN_MEMORY_STATS
+    """加载统计数据（只读）"""
+    global _stats_cache
+    if _stats_cache is not None:
+        return _stats_cache
     
-    # 优先读取文件中的数据（只读）
+    # 优先读取文件中的初始数据
     if DATA_FILE.exists():
         try:
             with open(DATA_FILE, 'r', encoding='utf-8') as f:
-                IN_MEMORY_STATS = json.load(f)
-                return IN_MEMORY_STATS
+                _stats_cache = json.load(f)
+                return _stats_cache
         except Exception:
             pass
     
     # 文件不存在或读取失败，使用默认数据
-    IN_MEMORY_STATS = DEFAULT_STATS.copy()
-    return IN_MEMORY_STATS
+    _stats_cache = DEFAULT_STATS.copy()
+    return _stats_cache
 
 def record_page_view(session_id: Optional[str] = None) -> Dict:
     """记录页面访问（只更新内存数据，不写入文件）"""
@@ -50,4 +49,5 @@ def record_page_view(session_id: Optional[str] = None) -> Dict:
             stats["visitor_sessions"].append(session_id)
             stats["unique_visitors"] = len(stats["visitor_sessions"])
     
+    # 关键：不执行任何写入操作，避免Vercel权限错误
     return stats
