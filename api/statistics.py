@@ -49,5 +49,21 @@ def record_page_view(session_id: Optional[str] = None) -> Dict:
             stats["visitor_sessions"].append(session_id)
             stats["unique_visitors"] = len(stats["visitor_sessions"])
     
-    # 关键：不执行任何写入操作，避免Vercel权限错误
     return stats
+
+def record_test_result(personality: str):
+    """记录测试结果（只更新内存数据，不写入文件）"""
+    stats = load_stats()
+    
+    # 增加测试总数
+    stats["total_tests"] += 1
+    
+    # 记录人格结果
+    if personality in stats["test_results"]:
+        stats["test_results"][personality] += 1
+    else:
+        stats["test_results"][personality] = 1
+
+def get_statistics() -> Dict:
+    """获取完整统计数据"""
+    return load_stats()
