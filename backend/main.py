@@ -14,6 +14,7 @@ app.add_middleware(
     allow_origins=[
         "https://sbti-plus.vercel.app",
         "https://sbti-plus-ab76.vercel.app",
+        "https://www.nbsbti.fun",
         "http://localhost:5173",
         "http://localhost:3000",
     ],
