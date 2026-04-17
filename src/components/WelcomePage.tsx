@@ -61,6 +61,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onStartTest }) => {
 
   useEffect(() => {
     // 记录页面访问
+    /*
     const recordPageView = async () => {
       try {
         const response = await fetch('/api/stats/page-view', {
@@ -76,7 +77,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onStartTest }) => {
         console.error('记录页面访问失败:', error);
       }
     };
-
+*/
     recordPageView();
 
     let stageTimer: number;
