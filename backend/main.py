@@ -24,7 +24,7 @@ app.add_middleware(
 )
 
 # 包含路由
-app.include_router(router)
+app.include_router(router, prefix="/api") 
 
 
 @app.get("/")
