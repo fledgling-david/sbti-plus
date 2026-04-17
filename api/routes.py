@@ -25,10 +25,9 @@ def submit_test(request: TestRequest):
 def record_page_view(request: Request):
     session_id = request.cookies.get("sbti_session_id")
     if not session_id:
-        session_id = str(uuid.uuid4())
-
+        session_id = "default"
+    
     stats = statistics.record_page_view(session_id)
-
     return {
         "page_views": stats["page_views"],
         "unique_visitors": stats["unique_visitors"],
@@ -39,19 +38,19 @@ def record_page_view(request: Request):
 def get_statistics():
     stats = statistics.get_statistics()
 
-    total_tests = stats["total_tests"]
-    personality_percentages = {}
+    total = stats.get("total_tests", 0)
+    percentages = {}
 
-    for p, count in stats["test_results"].items():
-        personality_percentages[p] = {
-            "count": count,
-            "percentage": round((count / total_tests) * 100, 2) if total_tests > 0 else 0
-        }
+    for key, num in stats.get("test_results", {}).items():
+        if total > 0:
+            percentages[key] = round(num / total * 100, 2)
+        else:
+            percentages[key] = 0
 
     return {
-        "page_views": stats["page_views"],
-        "unique_visitors": stats["unique_visitors"],
-        "total_tests": total_tests,
-        "test_results": stats["test_results"],
-        "personality_percentages": personality_percentages
+        "page_views": stats.get("page_views", 0),
+        "unique_visitors": stats.get("unique_visitors", 0),
+        "total_tests": total,
+        "test_results": stats.get("test_results", {}),
+        "personality_percentages": percentages
     }
