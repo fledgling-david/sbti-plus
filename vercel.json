@@ -1,23 +1,30 @@
 {
   "version": 2,
   "builds": [
+    // 1. 构建Python后端
     {
       "src": "backend/main.py",
       "use": "@vercel/python"
     },
+    // 2. 构建Vite静态文件（强制指定输出目录）
     {
-      "src": "dist/**/*",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
+    // 所有 /api/xxx 请求转发给Python后端
     {
       "src": "/api/(.*)",
       "dest": "backend/main.py"
     },
+    // 其他所有请求，返回静态文件（包括根路径/）
     {
       "src": "/(.*)",
-      "dest": "index.html"
+      "dest": "$1"
     }
   ]
 }
