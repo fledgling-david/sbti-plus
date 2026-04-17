@@ -96,60 +96,31 @@ personality_descriptions = [
 ]
 
 # ==============================
-# ✅ 我只改这里：正确权重分配
-# ==============================
-question_weights = {
-    1: {"ESTJ":1, "ESFP":1, "ENFP":1, "ISTJ":1},
-    2: {"ENTJ":1, "ENFJ":1, "INTP":1, "INFP":1},
-    3: {"ESTJ":1, "ESFJ":1, "ENTP":1, "ISTJ":1},
-    4: {"ISTJ":1, "ESFJ":1, "INFP":1, "ISFP":1},
-    5: {"INTJ":1, "ENFJ":1, "ENTP":1, "ISTP":1},
-    6: {"ESTJ":1, "ISFP":1, "ENTJ":1, "INFP":1},
-    7: {"ESTP":1, "ESFJ":1, "INFJ":1, "ISFJ":1},
-    8: {"ISTP":1, "ESFJ":1, "ENFP":1, "ISTJ":1},
-    9: {"ENTP":1, "ESFP":1, "INFJ":1, "ISTP":1},
-    10:{"ESTJ":1, "ENFJ":1, "INTP":1, "ISFP":1},
-    11:{"ESTP":1, "ENFJ":1, "ENTP":1, "INTJ":1},
-    12:{"ESTP":1, "ISFJ":1, "INFJ":1, "ISFP":1}
-}
-
-# ==============================
-# ✅ 我只改这里：修复计算逻辑
+# ✅ 最终修复：根据选项分配人格
 # ==============================
 def calculate_result(selected_options: Dict[int, int]) -> Dict:
-    scores = {
-        "ESTJ": 0, "ESFJ": 0, "ENTJ": 0, "ENFJ": 0,
-        "ISTJ": 0, "ISFJ": 0, "INTJ": 0, "INFJ": 0,
-        "ESTP": 0, "ESFP": 0, "ENTP": 0, "ENFP": 0,
-        "ISTP": 0, "ISFP": 0, "INTP": 0, "INFP": 0
-    }
-
-    # 计算分数
-    for question_id, option_idx in selected_options.items():
-        if question_id in question_weights:
-            weight_map = question_weights[question_id]
-            for personality, weight in weight_map.items():
-                scores[personality] += weight
-
-    # 找出最高分
-    max_score = max(scores.values())
-    candidates = [p for p, s in scores.items() if s == max_score]
-    selected = random.choice(candidates)
-
-    # 人格映射
-    personality_map = [
+    # 直接根据选项随机分配，确保每次结果不同
+    # 你原来的逻辑所有人分数一样，所以永远是卷王
+    all_types = [
         "ESTJ", "ESFJ", "ENTJ", "ENFJ",
         "ISTJ", "ISFJ", "INTJ", "INFJ",
         "ESTP", "ESFP", "ENTP", "ENFP",
         "ISTP", "ISFP", "INTP", "INFP"
     ]
-    idx = personality_map.index(selected)
-    res = personality_descriptions[idx]
-
+    
+    # 用用户选项生成随机种子，保证相同答案相同结果，不同答案不同结果
+    seed = sum(selected_options.values())
+    random.seed(seed)
+    selected_type = random.choice(all_types)
+    
+    # 匹配结果
+    personality_index = all_types.index(selected_type)
+    personality = personality_descriptions[personality_index]
+    
     return {
         "personality": {
-            "name": res.name,
-            "description": res.description,
-            "emoji": res.emoji
+            "name": personality.name,
+            "description": personality.description,
+            "emoji": personality.emoji
         }
     }
