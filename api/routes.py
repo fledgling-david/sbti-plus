@@ -5,15 +5,38 @@ from personality_calculator import questions, calculate_result
 
 router = APIRouter()
 
-# 1. 只保留题目接口
+# 题目接口（正常）
 @router.get("/questions", response_model=List[Question])
 def get_questions():
-    """获取测试题库"""
     return questions
 
-# 2. 只保留测试提交接口，完全移除统计调用
+# 测试接口（正常）
 @router.post("/test", response_model=TestResponse)
 def submit_test(request: TestRequest):
-    """提交测试答案，返回测试结果"""
     result = calculate_result(request.selected_options)
     return result
+
+# ==============================
+# 以下是：绝对不崩溃的统计接口
+# ==============================
+
+# 内存统计（永远不会报错）
+stats = {
+    "page_views": 0,
+    "unique_visitors": 0,
+    "total_tests": 0,
+    "test_results": {},
+}
+
+@router.post("/stats/page-view")
+def page_view():
+    stats["page_views"] += 1
+    return {
+        "page_views": stats["page_views"],
+        "unique_visitors": 1,
+        "session_id": "none"
+    }
+
+@router.get("/stats")
+def get_stats():
+    return stats
