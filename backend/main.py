@@ -11,14 +11,19 @@ app = FastAPI(
 # 配置CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 在生产环境中应该设置具体的前端域名
+    allow_origins=[
+        "https://sbti-plus.vercel.app",
+        "https://sbti-plus-ab76.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # 包含路由
-app.include_router(router, prefix="/api")
+app.include_router(router)
 
 
 @app.get("/")
