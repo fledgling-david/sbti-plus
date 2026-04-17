@@ -1,5 +1,5 @@
-fastapi
-uvicorn[standard]
-pydantic
-pydantic-settings
-python-multipart
+fastapi==0.136.0
+uvicorn[standard]==0.44.0  # 必须加[standard]，否则线上缺依赖
+pydantic==2.13.1
+pydantic-settings==2.13.1
+python-multipart==0.0.26
