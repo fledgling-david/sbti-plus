@@ -78,7 +78,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onStartTest }) => {
       }
     };
 
-    recordPageView();
+     //recordPageView();
 */
     let stageTimer: number;
     let crazyTextTimer: number;
