@@ -77,9 +77,9 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ onStartTest }) => {
         console.error('记录页面访问失败:', error);
       }
     };
-*/
-    recordPageView();
 
+    recordPageView();
+*/
     let stageTimer: number;
     let crazyTextTimer: number;
     
